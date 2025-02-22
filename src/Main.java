@@ -1,22 +1,15 @@
-import model.Node;
-import model.Queue;
+import model.*;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("Ticket Order System");
 
-        Queue<Node<Integer>> queue = new Queue<>();
+        Node<Integer> example1 = new Node<>(10);
+        System.out.println(example1.getValue());
 
-        queue.enqueue(new Node<>(10));
-        queue.enqueue(new Node<>(20));
-        queue.enqueue(new Node<>(30));
-        queue.enqueue(new Node<>(40));
-        queue.enqueue(new Node<>(50));
+        Node<String> example2 = new Node<>("Hello");
+        System.out.println(example2.getValue());
 
-        System.out.println(queue.at(0));
-        System.out.println(queue.at(1));
-        System.out.println(queue.at(2));
-        System.out.println(queue.at(3));
-        System.out.println(queue.at(4));
+
     }
 }

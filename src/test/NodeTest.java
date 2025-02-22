@@ -9,7 +9,7 @@ class NodeTest {
 
     @Test
     void testGetId() {
-        assertAll(() -> new Node<Object>().getId());
+        assertAll(() -> new Node<Object>().getKey());
     }
 
     @Test

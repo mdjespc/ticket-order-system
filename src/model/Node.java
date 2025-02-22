@@ -3,21 +3,21 @@ package model;
 import java.util.Objects;
 
 public class Node <T> implements Cloneable{
-    private long id;
+    private long key;
     private T value;
 
     public Node() {
-        this.id = this.hashCode();
+        this.key = this.hashCode();
         this.value = null;
     }
 
     public Node(T value) {
-        this.id = this.hashCode();
+        this.key = this.hashCode();
         this.value = value;
     }
 
-    public long getId() {
-        return id;
+    public long getKey() {
+        return key;
     }
 
     public T getValue() {
@@ -45,4 +45,5 @@ public class Node <T> implements Cloneable{
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
 }
