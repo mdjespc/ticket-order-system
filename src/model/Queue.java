@@ -1,42 +1,41 @@
 package model;
 
 import java.io.InvalidClassException;
+import java.util.Arrays;
 
 public class Queue <T> {
-    private Object[] elements;
+    private T[] elements;
 
-    private int maxSize;
     private int size;
     private int length;
     private int front;
     private int rear;
 
+    @SuppressWarnings("unchecked")
     public Queue(){
         this.size = 1;
         this.length = 0;
         this.front = 0;
         this.rear = 0;
-        this.elements = new Object[size];
+        this.elements = (T[]) new Object[size];
     }
 
+    @SuppressWarnings("unchecked")
     public Queue(int maxSize){
-        this.maxSize = maxSize;
-        this.size = this.maxSize;
+        this.size = maxSize;
         this.length = 0;
         this.front = 0;
         this.rear = 0;
-        this.elements = new Object[size];
+        this.elements = (T[]) new Object[size];
     }
 
     public void enqueue(T value){
         if(isFull())
-            throw new RuntimeException("Queue is full.");
+            reallocateElements(size * 2);
 
-        this.elements[length++] = value;
-        rear = length - 1;
-
-        if (isFull())
-            reallocateElements(size + 1);
+        this.elements[rear] = value;
+        rear = (rear + 1) % size;
+        length++;
 
     }
 
@@ -44,43 +43,32 @@ public class Queue <T> {
         if(isEmpty())
             throw new RuntimeException("Queue is empty.");
 
-        T tmpvar = (T) elements[front];
-        elements[front++] = null;
-        //TODO  shift remaining elements one index to the left
+        T dequeuedElement = elements[front];
+        elements[front] = null;
+        front = (front + 1) % size;
+        length--;
 
-        return tmpvar;
+        return dequeuedElement;
     }
 
     public T at(int index){
-        return (T) this.elements[index];
+        if (index < 0 || index >= length)
+            throw new IndexOutOfBoundsException("Index out of range.");
 
+        return this.elements[index];
     }
 
     private boolean isEmpty(){
-        return (length == 0 || elements[front] == null);
+        return length == 0;
     }
 
     private boolean isFull(){
-        return (length == size || rear == size - 1);
+        return length == size;
     }
 
-    private void reallocateElements(int size){
-        if (size <= this.size) return;
-
-        this.elements = copyOfArray(size);
-        this.size = this.elements.length;
-    }
-
-    private Object[] copyOfArray(int size){
-        if (size <= this.size) return null;
-
-        var copy = new Object[size];
-
-        for (int i = 0; i < elements.length; i++){
-            copy[i] = elements[i];
-        }
-
-        return copy;
+    private void reallocateElements(int newSize){
+        elements = Arrays.copyOf(elements, newSize);
+        size = newSize;
     }
 
 }
