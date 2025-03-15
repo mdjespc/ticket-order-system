@@ -71,4 +71,14 @@ public class Queue <T> {
         size = newSize;
     }
 
+    @Override
+    public String toString() {
+        return "Queue{" +
+                "elements=" + Arrays.toString(elements) +
+                ", size=" + size +
+                ", length=" + length +
+                ", front=" + front +
+                ", rear=" + rear +
+                '}';
+    }
 }
